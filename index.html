@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Similar al Chopo</title>
+    <style>
+        /* Custom properties/variables  */
+        :root {
+            --main-white: #f0f0f0;
+            --main-red: #be3144;
+            --main-blue: #2a3eee;
+            --main-gray: #303841;
+            --main-low-gray: #e7eaee;
+        }
+
+        /*Resetear la base para que no deje margen en los bordes*/
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html {
+            box-sizing: border-box;
+            /*Asigna font size para facilitar los calculos REM
+             *Tamaño de fuente por default del documento =16px, 1rem=16px
+             *(100% / 16px)*10 = 62.5%, 1rem = 10px, 62.5% = 10px;
+             */
+            font-size: 65.5;
+        }
+
+        /*Unas pocas medya query para asignar algunos tamaños 
+         * de fuente para diferentes tamaños de pantalla
+         *Esto ayuda a automatizar un poco de responividad
+         *El truco es para usar el Rem para valores de tamaño, margin y padding.
+         *Por que REM es relativo para el ta,año de fuente del documento.
+         *Esto va afectar todas las propiedades que usen unidades rem para los valores
+         */
+
+        /*Yo estoy usando unidades EM para los breakpoints
+         *El calculo es el siguinete
+         *El tamaño de pantalla dividido bpr el tamaño fuente base del navegador
+          * Por ejemplo: Un breakpoint a los 980px 
+         *980px / 16px = 61.5em
+         */
+
+        /*1200px / 16px = 75em*/
+        @media(max-width: 75em) {
+            html {
+                font-size: 60%;
+            }
+        }
+
+        /*980px / 16px = 61.25em*/
+        @media(max-width: 61.25em) {
+            html {
+                font-size: 58%;
+            }
+        }
+
+        /*460px / 16px = 28.75em*/
+        @media(max-width: 28.75em) {
+            html {
+                font-size: 55%;
+            }
+        }
+
+        /*Estilos Base*/
+        body {
+            font-family: 'Popins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 1.4;
+            color: var(--main-white)
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--main-white);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        p {
+            margin: 1.5rem;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /*Barra de navegacion */
+        .nav {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            background: var(--main-blue)
+        }
+
+        .nav-list {
+            display: flex;
+        }
+
+        .nav-list a {
+            display: block;
+            font-size: 1.2rem;
+            padding: .5rem;
+            margin: 0 1rem;
+            border-radius: 1rem;
+        }
+
+        /*Galeria*/
+        .galery-section {
+            display: flex;
+            background: var(--main-blue);
+            align-items: center;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+
+        }
+
+        .galery-image {
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .galery-grid {
+            display: grid;
+            width: 100%;
+            max-width: 650px;
+            margin-right: 100px;
+        }
+
+        .project-item {
+            background: transparent;
+            height: auto;
+        }
+
+        /*Formulario Header*/
+        .home-search {
+            background: var(--main-low-gray);
+            height: 25vh;
+            width: 60%;
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 1rem;
+            border-radius: 10px;
+            color: black;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .box-search {
+            width: 100%;
+            border-radius: 5px;
+            height: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .home-search button {
+            background: linear-gradient(270deg, #4FDC6C 0%, #27C59E 50%, #4FDC6C 100%);
+            width: 50%;
+            height: 1.8rem;
+            border-radius: 10px;
+            font-size: 1.3rem;
+        }
+
+        /*Secion pruebas covid*/
+
+        .projects-section {
+            text-align: center;
+            padding: 1rem 2rem;
+            background: var(--main-blue);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-gap: 3rem;
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            margin-bottom: 6rem;
+            background: transparent;
+        }
+
+        .project {
+            background: var(--main-gray);
+            box-shadow: 10px 10px 5px var(--main-white);
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .project-image {
+            height: calc(100% -6.8rem);
+            width: 100%;
+            object-fit: cover;
+        }
+
+
+        /*Area de tarjetas*/
+
+        .vidasana-cards-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        .vidasana-cards-list li {
+            flex-basis: calc(50% -12px);
+            max-width: calc(50% -12px);
+            margin: 0px 0px 25px 0px;
+            display: flex;
+            width: 95%;
+        }
+
+
+        @media(min-width: 768px) {
+            .vidasana-cards-list>li {
+                flex-basis: calc(33% - 12px);
+                max-width: calc(33% -12px);
+                text-align: center;
+            }
+        }
+
+
+        .vidasana-card {
+            padding: 1.5rem;
+            background: chocolate;
+            border-radius: 1rem;
+        }
+
+
+        .vidasana-highlight {
+            font-size: 2rem;
+            line-height: 1.2;
+            font-weight: 900;
+            text-align: center;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .vidasana-description {
+
+            font-size: 1.rem;
+            line-height: 1.5rem;
+            font-weight: 300;
+            text-align: center;
+            max-width: 240px;
+            margin: 0 auto 15px auto;
+        }
+
+        .vidasana-card-title {
+            font-size: 1.5rem;
+            line-height: 1.5;
+            font-weight: 900;
+            text-align: center;
+            margin: 0px 0px 10px 0px;
+        }
+
+        /*Fin section Proyecto*/
+
+        .breve-info {
+            margin: 10px 50px 50px 50px;
+            max-width: 80%;
+            background: blueviolet;
+            display: flex;
+            justify-content: center;
+            height: auto;
+        }
+
+        .container_ {
+            background: silver;
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .container {
+            background: silver;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="nav">
+        <ul class="nav-list">
+            <li><a href="">COVID 19</a></li>
+            <li><a href="">Resultados</a></li>
+            <li><a href="">Facturación</a></li>
+            <li><a href="">Sucursales</a></li>
+            <li><a href="">Estudios</a></li>
+            <li><a href="">Promociones</a></li>
+            <li><a href="">Busqueda</a></li>
+        </ul>
+    </nav>
+
+
+
+    <div class="container" style="background: var(--main-blue);"> 
+        <div class="project-grid">
+
+            <div class="project-item">
+                <img class="galery-image"
+                    src="https://www.chopo.com.mx/media/weltpixel/owlcarouselslider/images/2/0/202108-desktop.png   "
+                    alt="PruebaCovid">
+            </div>
+
+            <form action="" class="home-search">
+                <h2>Busca y calcula el costo del estudio que quieres…</h2>
+                <label for="" style="color: var(--main-gray);">
+                    <p>Estudio..</p>
+                    <input class="box-search" type="text" placeholder="Buscar el estudio..">
+                </label>
+                <button>Enviado</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <section class="galery-section">
+
+        <form action="" class="home-search">
+            <h2>Busca y calcula el costo del estudio que quieres…</h2>
+            <label for="" style="color: var(--main-gray);">
+                <p>Estudio..</p>
+                <input class="box-search" type="text" placeholder="Buscar el estudio..">
+            </label>
+            <label for="">
+                <button>Enviado</button>
+            </label>
+        </form>
+
+        <div class="galery-grid">
+            <img class="galery-image"
+                src="https://www.chopo.com.mx/media/weltpixel/owlcarouselslider/images/2/0/202108-desktop.png   "
+                alt="PruebaCovid">
+        </div>
+    </section>
+
+
+    <div class="container">
+        <h2 style="color: steelblue; font-size: xx-large;">div > ul > li > div > div + div + p + img</h2>
+        <ul class="vidasana-cards-list">
+            <li>
+                <div class="vidasana-card" style="background: #4FDC6C;">
+                    <div class="vidasana-highlight">PRUEBA PCR</div>
+                    <div class="vidasana-description">Crees tener COVID-19 y tienes o no síntomas. </div>
+                    <p style="text-align: center;">Muestra de nariz y garganta</p>
+                    <div class="vidasana-card-title"> RESULTADOS EN 24 a 72 horas</div>
+                    <img src="https://www.chopo.com.mx/media/pruebas-covid-19/estrellas-PCR.png"
+                        alt="AQUI VA UNA IMAGEN">
+                    <p>Esta es la prueba solicitada para fines de viajes e intervenciones médicas, entre otras.
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="vidasana-card" style="background: #be3144;">
+                    <div class="vidasana-highlight">PRUEBA DE ANTÍGENO* </div>
+                    <div class="vidasana-description">
+                        (prueba rápida)</div>
+                    <p style="text-align: center;">Muestra de nariz y garganta</p>
+                    <div class="vidasana-card-title">
+                        RESULTADOS EN 30 minutos</div>
+                    <img src=https://www.chopo.com.mx/media/pruebas-covid-19/estrellas-antigeno.png
+                        alt="AQUI VA UNA IMAGEN">
+                    <p> Si tu resultado es POSITIVO se confirma COVID-19</p>
+                    <p>Si tu resultado es NEGATIVO es necesario realizar una PRUEBA DE PCR</p>
+                </div>
+            </li>
+            <li>
+                <div class="vidasana-card" style="background: navy;">
+                    <div class="vidasana-highlight">
+                        PRUEBA DE ANTICUERPOS</div>
+                    <div class="vidasana-description">Prueba post-vacuna o post-infección</div>
+                    <p style="text-align: center;">
+                        Muestra de sangre</p>
+                    <div class="vidasana-card-title">
+                        RESULTADOS EN 24 horas</div>
+                    <img src="https://www.chopo.com.mx/media/pruebas-covid-19/estrellas-anticuerpos.png"
+                        alt="AQUI VA UNA IMAGEN">
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <section id="projects" class="projects-section">
+        <h2 style="font-size: xx-large;">section > div > a > div + div + p + img</h2>
+        <div class="project-grid">
+            <a class="vidasana-card" style="background:chocolate;" href="#" target="_blank">
+                <div class="vidasana-highlight">PRUEBA PCR</div>
+                <div class="vidasana-description">Crees tener COVID-19 y tienes o no síntomas. </div>
+                <p style="text-align: center;">Muestra de nariz y garganta</p>
+                <div class="vidasana-card-title"> RESULTADOS EN 24 a 72 horas</div>
+                <img src="https://www.chopo.com.mx/media/pruebas-covid-19/estrellas-PCR.png" alt="AQUI VA UNA IMAGEN">
+                <p>Esta es la prueba solicitada para fines de viajes e intervenciones médicas, entre otras.
+                </p>
+            </a>
+
+            <a class="vidasana-card" style="background: darkgreen;" href="#" target="_blank">
+                <div class="vidasana-highlight">PRUEBA DE ANTÍGENO* </div>
+                <div class="vidasana-description">
+                    (prueba rápida)</div>
+                <p style="text-align: center;">Muestra de nariz y garganta</p>
+                <div class="vidasana-card-title">
+                    RESULTADOS EN 30 minutos</div>
+                <img src=https://www.chopo.com.mx/media/pruebas-covid-19/estrellas-antigeno.png
+                    alt="AQUI VA UNA IMAGEN">
+                <p> Si tu resultado es POSITIVO se confirma COVID-19</p>
+                <p>Si tu resultado es NEGATIVO es necesario realizar una PRUEBA DE PCR</p>
+            </a>
+
+            <a class="vidasana-card" style="background: navy;" href="#" target="_blank">
+                <div class="vidasana-highlight">
+                    PRUEBA DE ANTICUERPOS</div>
+                <div class="vidasana-description">Prueba post-vacuna o post-infección</div>
+                <p style="text-align: center;">
+                    Muestra de sangre</p>
+                <div class="vidasana-card-title">
+                    RESULTADOS EN 24 horas</div>
+                <img src="https://www.chopo.com.mx/media/pruebas-covid-19/estrellas-anticuerpos.png"
+                    alt="AQUI VA UNA IMAGEN">
+
+            </a>
+        </div>
+    </section>
+
+
+    <section id="projects" class="projects-section">
+        <h2 style="font-size: xx-large;">section > div > a > img + p</h2>
+
+        <div class="project-grid">
+            <a class="project" href="https://codepen.io/freeCodeCamp/full/zNqgVx" target="_blank">
+                <img class="project-image" src="https://cdn.freecodecamp.org/testable-projects-fcc/images/tribute.jpg"
+                    alt="projecto uno">
+                <p class="project-title">
+                    <span class="code">&lt;</span>
+                    Projecto Dos
+                    <span class="code">&#47;&gt;</span>
+                </p>
+            </a>
+
+            <a class="project" href="https://codepen.io/freeCodeCamp/full/zNqgVx" target="_blank">
+                <img class="project-image" src="https://cdn.freecodecamp.org/testable-projects-fcc/images/tribute.jpg"
+                    alt="projecto uno">
+                <p class="project-title">
+                    <span class="code">&lt;</span>
+                    Projecto Dos
+                    <span class="code">&#47;&gt;</span>
+                </p>
+            </a>
+
+
+            <a class="project" href="https://codepen.io/freeCodeCamp/full/zNqgVx" target="_blank">
+                <img class="project-image" src="https://cdn.freecodecamp.org/testable-projects-fcc/images/tribute.jpg"
+                    alt="projecto uno">
+                <p class="project-title">
+                    <span class="code">&lt;</span>
+                    Projecto Tres
+                    <span class="code">&#47;&gt;</span>
+                </p>
+            </a>
+
+            <a class="project" href="https://codepen.io/freeCodeCamp/full/zNqgVx" target="_blank">
+                <img class="project-image" src="https://cdn.freecodecamp.org/testable-projects-fcc/images/tribute.jpg"
+                    alt="projecto uno">
+                <p class="project-title">
+                    <span class="code">&lt;</span>
+                    Projecto Cuatro
+                    <span class="code">&#47;&gt;</span>
+                </p>
+            </a>
+        </div>
+    </section>
+
+
+
+    <div class="breve-info">
+        <div class="container">
+            <h3 class="breve-info-heading">
+                Busca, agenda y paga tus estudios con beneficios exlusivos.
+            </h3>
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>
